@@ -9,9 +9,9 @@ class Main
         //printlist(list1);
         int[] arr2 = {3, 7, 9, 10, 11};
         Node<Integer> list2 = buildlist(arr2);
-        int[] arr3 = {4, 2, 7, 4, 5};
+        int[] arr3 = {1, 4, 2, 2, 6, 5};
         Node<Integer> list3 = buildlist(arr3);
-        printlist(SelectionSort(list3));
+        printlist(Once(list3));
         
         
     }
@@ -123,6 +123,79 @@ class Main
         return sortedHead;
     }
 
+    //ex3
+    public static int Distance(Node<Integer>L1,int a)
+    {
+        Node<Integer> p=L1;
+        int length=0;
+        int Start_index=0;
+        int End_index=0;
+
+        boolean st=false;
+        if(!appearsRec(L1, a))
+        {
+            return -1;
+        }
+        while (p!=null)
+        {
+            length++;
+            if(p.getValue().equals(a) && !st)
+            {
+                Start_index=length;
+                st=!st;
+            }
+            if(p.getValue().equals(a) && st)
+            {
+                End_index=length;
+            }
+            p=p.getNext();
+                
+        }
+        Start_index--;
+        End_index--;
+
+        return Start_index+length-End_index-1;
+
+    }
+
+    //ex4
+    public static boolean AllDiffrent(Node<Integer>L1)
+    {
+        Node<Integer>p1=L1;
+        Node<Integer>p2=null;
+        while(p1.getNext()!=null) 
+        {
+            p2=p1.getNext();
+            while(p2!=null)
+            {
+                if(p1.getValue().equals(p2.getValue()))
+                {
+                    return false;
+                }
+                p2=p2.getNext();
+            }
+            p1=p1.getNext();
+        }
+        return true;
+    }
+
+    //ex5
+    public static Node<Integer> Once(Node<Integer>L1)
+    {
+        Node<Integer>pl=L1;
+        Node<Integer>head=new Node<Integer>(null,null);
+        Node<Integer>p=head;
+        while (pl !=null) 
+        {
+            if(!appearsRec(head.getNext(),pl.getValue()))
+            {
+                p.setNext(new Node<Integer>(pl.getValue(),null));
+                p=p.getNext();
+            }
+            pl=pl.getNext();
+        }
+        return head.getNext();
+    }
 
     //build list
     public static Node<Integer> buildlist(int[] a)
@@ -175,6 +248,4 @@ class Main
         return l;
 
     }
-
-
 }
